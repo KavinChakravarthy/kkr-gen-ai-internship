@@ -1,0 +1,20 @@
+# Ignore virtual environments
+venv/
+
+# Ignore Python cache files and folders everywhere
+__pycache__/
+*.pyc
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore macOS system file
+.DS_Store
+
+# Ignore model files
+*.joblib
+*.pkl
+*.zip
+
+# Ignore logs
+logs/
