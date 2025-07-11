@@ -18,3 +18,9 @@ __pycache__/
 
 # Ignore logs
 logs/
+
+# src folders where the trained models are stored
+src/
+
+# Ignore data files
+ cats-and-dogs-classification/data/
