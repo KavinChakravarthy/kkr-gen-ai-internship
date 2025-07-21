@@ -23,6 +23,17 @@
   - [How to Run](#how-to-run-1)
   - [Project Structure](#project-structure-1)
   - [Versions Used](#versions-used)
+- [Speech Emotion Recognition](#speech-emotion-recognition)
+  - [Project Overview](#project-overview-2)
+  - [Data](#data-2)
+  - [Setup](#setup-2)
+  - [Exploratory Data Analysis](#exploratory-data-analysis-2)
+  - [Preprocessing](#preprocessing-2)
+  - [Modeling](#modeling-2)
+  - [Results](#results-2)
+  - [How to Run](#how-to-run-2)
+  - [Project Structure](#project-structure-2)
+  - [Versions Used](#versions-used-1)
 
 ---
 
@@ -191,10 +202,10 @@ This project builds a binary image classifier to distinguish between cats and do
 ## Project Structure
 
 ```
-├── cats-and-dogs-classification/
-│   └── data/
-│       ├── Cat/
-│       └── Dog/
+├── notebooks/
+│   ├── Cat/
+│   └── Dog/
+├── notebooks/
 │   └── classifier.ipynb
 ├── src/
 │   └── model_50.keras
@@ -213,3 +224,174 @@ This project builds a binary image classifier to distinguish between cats and do
 | Matplotlib   | latest       |
 | Pandas       | latest       |
 | Seaborn      | latest       |
+
+# Speech Emotion Recognition
+
+This project classifies emotions from speech audio using deep learning models (LSTM and SimpleRNN) and MFCC features extracted from the RAVDESS dataset. The full workflow—including feature extraction, EDA, preprocessing, model training, evaluation, and saving—is demonstrated in `emotion_recognizer.ipynb`
+
+## Project Overview
+
+This project builds a robust pipeline to recognize emotions in speech. Key steps include:
+
+- Audio feature extraction `MFCCs`
+- Exploratory data analysis (EDA)
+- Preprocessing and feature normalization
+- Model training with `LSTM` and `SimpleRNN`
+- Model evaluation and plotting
+- Saving trained models for future use
+  
+## Data
+
+Dataset: [RAVDESS Speech Audio](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio?resource=download)
+
+Location: `data/`
+
+Labels: 8 emotions, extracted from the 7th character of each filename:
+
+1 — Neutral
+2 — Calm
+3 — Happy
+4 — Sad
+5 — Angry
+6 — Fearful
+7 — Disgust
+8 — Surprised
+
+## Setup
+
+1. Clone the repository and enter the project directory:
+
+  ```bash
+  git clone <your-repo-url>
+  cd <your-repo-name>
+  ```
+
+2. Create required directories:
+
+  ```bash
+  mkdir -p src data
+  ```
+3. Install dependencies:
+
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+4. Download the dataset [RAVDESS Speech Audio](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio?resource=download)
+
+5. Extract all .wav files (and subfolders, if any) inside the data/ directory:
+
+## Exploratory Data Analysis
+
+- Label distribution:
+  - Visualizes sample counts for each of the 8 emotion classes (parsed from filename).
+
+- Feature statistics:
+  - Computes descriptive stats (mean, std, min, max, quartiles) for all **40** MFCC coefficients.
+
+- Correlation:
+  - Displays a heatmap of the correlation matrix between MFCC features.
+
+- Distribution visualizations:
+  - Boxplots and histograms for `MFCCs` per emotion class.
+
+- Audio visualizations:
+  - Example waveforms and MFCC spectrograms for selected audio files.
+
+- Data quality checks:
+  - Verifies that there are no missing or corrupted audio files or features.
+
+## Preprocessing
+
+1. MFCC Extraction:
+  - Each .wav file is processed to extract a **40-dimensional** MFCC representation (averaged per file).
+
+2. Label encoding:
+  - Emotion codes are mapped to categorical integer labels suitable for classification.
+
+3. Train/val/test split:
+  - Data is split using standard methods for unbiased evaluation.
+
+## Modeling
+
+**LSTM Model:**
+- Deep LSTM layers with dense and dropout, outputting an 8-class softmax.
+
+**SimpleRNN Model:**
+- Stacked RNN with similar dense and dropout layers.
+
+Training:
+- Categorical cross-entropy loss and RMSprop optimizer.
+- Early stopping and learning-rate reduction callbacks for stability.
+
+## Results
+- Accuracy:
+  - Evaluated on the test set for both LSTM and RNN models.
+- Plots:
+  - Training/validation accuracy and loss per epoch shown as graphs.
+- Optional:
+  - Confusion matrix of class performance.
+- Model files:
+  - Saved as `model_LSTM.keras` and `model_RNN.keras` in `src/`.
+
+## How to Run
+
+1. Open `notebooks/emotion_recognizer.ipynb` in Jupyter or VS Code.
+2. Run all cells to:
+  - Extract features
+  - Explore and visualize the data
+  - Train and evaluate both models
+  - Save trained models to `src/`
+
+## Project Structure
+
+```
+├── data/
+|   └── ravdess/
+|       └── Actor_01/
+|       └── Actor_02/
+|       └── Actor_03/
+|       └── Actor_04/
+|       └── Actor_05/
+|       └── Actor_06/
+|       └── Actor_07/
+|       └── Actor_08/
+|       └── Actor_09/
+|       └── Actor_10/
+|       └── Actor_11/
+|       └── Actor_12/
+|       └── Actor_13/
+|       └── Actor_14/
+|       └── Actor_15/
+|       └── Actor_16/
+|       └── Actor_17/
+|       └── Actor_18/
+|       └── Actor_19/
+|       └── Actor_20/
+|       └── Actor_21/
+|       └── Actor_22/
+|       └── Actor_23/
+|       └── Actor_24/
+|       └── audio_speech_actors_01-24/
+├── notebooks/
+│   └── emotion_recognizer.ipynb
+├── src/
+│   └── model_LSTM.keras
+│   └── model_RNN.keras
+├── requirements.txt
+├── data_set_link.txt
+```
+
+## Versions Used
+
+| Tool         | Version      |
+|--------------|--------------|
+| Python       | 3.12.3       |
+| TensorFlow   | 2.19.0       |
+| Keras        | via tf.keras |
+| NumPy        | latest       |
+| Matplotlib   | latest       |
+| Pandas       | latest       |
+| Seaborn      | latest       |
+| Collections  | latest       |
+| librosa      | latest       |

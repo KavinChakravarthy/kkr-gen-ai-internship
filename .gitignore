@@ -17,6 +17,10 @@ __pycache__/
 *.keras
 *.zip
 
+# Ignore reference PDFs
+*.pdf
+references/
+
 # Ignore logs
 logs/
 
@@ -25,4 +29,5 @@ src/
 
 # Ignore data files
 cats-and-dogs-classification/data/
+speech-emotion-recognition/data/
 
