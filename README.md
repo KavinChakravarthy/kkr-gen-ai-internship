@@ -246,29 +246,21 @@ This project builds a robust pipeline to recognize emotions in speech. Key steps
   
 ## Data
 
-Dataset: [RAVDESS Speech Audio](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio?resource=download)
-
-Location: `data/`
-
-Labels: 8 emotions, extracted from the 7th character of each filename:
-
-1 — Neutral
-2 — Calm
-3 — Happy
-4 — Sad
-5 — Angry
-6 — Fearful
-7 — Disgust
-8 — Surprised
+- Dataset: [RAVDESS Speech Audio](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio?resource=download)
+- Location: `data/`
+- Labels: 8 emotions, extracted from the 7th character of each filename:
+  - 1 — Neutral
+  - 2 — Calm
+  - 3 — Happy
+  - 4 — Sad
+  - 5 — Angry
+  - 6 — Fearful
+  - 7 — Disgust
+  - 8 — Surprised
 
 ## Setup
 
-1. Clone the repository and enter the project directory:
-
-  ```bash
-  git clone <your-repo-url>
-  cd <your-repo-name>
-  ```
+1. Clone the repository and enter the project directory.
 
 2. Create required directories:
 
