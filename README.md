@@ -122,6 +122,8 @@ New features are created:
 ├── requirements.txt
 ```
 
+---
+
 # Cats and Dogs Classification
 
 ## Project Overview
@@ -224,6 +226,8 @@ This project builds a binary image classifier to distinguish between cats and do
 | Matplotlib   | latest       |
 | Pandas       | latest       |
 | Seaborn      | latest       |
+
+---
 
 # Speech Emotion Recognition
 
