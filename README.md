@@ -34,8 +34,19 @@
   - [How to Run](#how-to-run-2)
   - [Project Structure](#project-structure-2)
   - [Versions Used](#versions-used-1)
-
----
+- [CLIP: Vision \& Language Matching on FashionMNIST](#clip-vision--language-matching-on-fashionmnist)
+  - [Project Overview](#project-overview-3)
+  - [Data](#data-3)
+  - [Setup](#setup-3)
+  - [Exploratory Data Analysis](#exploratory-data-analysis-3)
+  - [Preprocessing](#preprocessing-3)
+  - [Model Architecture](#model-architecture)
+  - [Training](#training)
+  - [Evaluation](#evaluation)
+  - [Zero-Shot Classification](#zero-shot-classification)
+  - [How to Run](#how-to-run-3)
+  - [Project Structure](#project-structure-3)
+  - [Versions Used](#versions-used-2)
 
 # House Price Prediction
 
@@ -391,3 +402,118 @@ Training:
 | Seaborn      | latest       |
 | Collections  | latest       |
 | librosa      | latest       |
+
+---
+
+# CLIP: Vision & Language Matching on FashionMNIST
+
+This project demonstrates building and training a minimal CLIP (Contrastive Language-Image Pretraining) model from scratch using PyTorch, applied to the FashionMNIST dataset. All code and experiments are included in the `clip.ipynb` notebook.
+
+## Project Overview
+
+This project implements a simplified CLIP model—capable of aligning image and text representations—to perform cross-modal retrieval and zero-shot classification on FashionMNIST. Key components:
+- Vision Transformer–style image encoder
+- Custom text encoder with Transformer blocks and learnable positional embeddings
+- Symmetric contrastive learning objective
+- PyTorch end-to-end training and evaluation pipeline
+
+## Data
+
+- **Dataset:** FashionMNIST (10 clothing classes, grayscale 28×28 images)
+- **Captions:** Each image assigned a fixed natural-language prompt by class, e.g. “An image of trousers”
+- **Source:** Loaded using the `datasets` library
+
+## Setup
+
+1. Clone the repository and go to the project directory.
+2. *(Optional)* Create a virtual environment and activate it:
+
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+3. Install all dependencies:
+
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+## Exploratory Data Analysis
+
+- Loads and explores FashionMNIST images
+- Displays image/caption pairs to verify alignment
+- Checks class distribution
+- Visualizes random samples
+
+## Preprocessing
+
+- Converts images to standardized tensors via `torchvision.transforms`
+- Caption strings are tokenized with SOT/EOT and padding
+- Custom masking is applied for variable text length
+- Data returns: image, integer-tokenized caption, and mask tensor
+
+## Model Architecture
+
+**Image Encoder:**
+- Vision Transformer (ViT)-style: patch embedding, positional encoding, multiple Transformer layers, CLS token
+
+**Text Encoder:**
+- Learnable embedding lookup, positional encoding, stacked Transformer encoder layers
+
+Both encoders produce `emb_dim`-dimensional joint embeddings, normalized to unit length.
+
+**CLIP Loss:** Symmetric cross-entropy between image and text similarity matrices
+
+## Training
+
+- Model is trained end-to-end using symmetric contrastive (CLIP) loss
+- Key configuration (can be tuned via notebook):
+- emb_dim: 32
+- vit_width: 9
+- patch_size: 14
+- text encoder width: 32
+- n_heads, n_layers for both encoders
+- Adam optimizer, batch size: 128, epochs: 10
+- Model checkpoints saved to `src/clip.pt`
+
+## Evaluation
+
+- Reports batch loss during training
+- Loads the best checkpoint and evaluates "top-1" caption retrieval (image-to-text) accuracy on test set
+- Example: Model accuracy of approximately 84%
+
+## Zero-Shot Classification
+
+- Applies the trained CLIP model to classify test images **without** any additional training (“zero-shot”)
+- Compares an image to all possible class prompts, reports probability for each (top-k shown)
+- Example of prediction outputs:
+
+## How to Run
+
+1. Open `clip.ipynb` in Jupyter Notebook or VS Code.
+2. Run all notebook cells sequentially:
+ - Model, preprocessing, and dataset classes are all included in the notebook.
+ - Training, evaluation, and zero-shot demo are all interactive in this notebook.
+
+## Project Structure
+
+```
+├── notebooks/
+│   └── clip.ipynb
+├── src/
+│   └── clip.pt
+├── requirements.txt
+```
+
+## Versions Used
+
+| Tool        | Version  |
+| ----------- | -------- |
+| Python      | 3.12.3   |
+| PyTorch     | >=2.x    |
+| torchvision | latest   |
+| matplotlib  | latest   |
+| numpy       | latest   |
+| datasets    | latest   |
+
+---
